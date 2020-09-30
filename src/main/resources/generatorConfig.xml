@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--配置数据库驱动 -->
+    <classPathEntry location="C:\Users\12570\.m2\repository\mysql\mysql-connector-java\5.1.6\mysql-connector-java-5.1.6.jar" />
+    <!--mybatis 配置-->
+    <context id="Mysql2Tables" targetRuntime="MyBatis3">
+
+        <!-- 是否去除自动生成的注释true:是  false:否 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!-- 配置数据库链接信息 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/library?zeroDateTimeBehavior=convertToNull&amp;characterEncoding=UTF-8"
+                        userId="root"   password="666">
+        </jdbcConnection>
+
+        <!-- <javaTypeResolver>元素用于定义Java Type Resolver的属性。Java类型解析器用于根据数据库列信息计算Java类型。
+        缺省的Java Type Resolver尝试通过尽可能替换Integral类型（Long，Integer，Short等）来使JDBC DECIMAL和NUMERIC类型更易于使用。
+        如果这种行为是不希望的，请将属性“ forceBigDecimals”设置为“ true”。-->
+        <!-- 默认为false 把JDBC DECIMAL 和NUMERIC 类型解析为Integer,
+        如果小数位数大于零，或者长度大于18，则将使用java.math.BigDecimal类型。
+        如果小数位数为零，长度为10到18，则Java类型解析器将替换java.lang.Long。
+        如果小数位数为零，长度为5到9，则Java类型解析器将替换java.lang.Integer。
+        如果小数位数为零，并且长度小于5，则Java类型解析器将替换java.lang.Short。
+        为true  时把JDBC DECIMAL和NUMERIC 类型始终解析为java.math.BigDecimal -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+
+        <!--用于定义Java模型生成器的属性-->
+        <!-- targetProject:生成实体类的位置 -->
+        <javaModelGenerator targetPackage="com.test.restful.domain" targetProject="src/main/java">
+            <!-- 是否让数据库表名作为包的后缀  -->
+            <property name="enableSubPackages" value="false" />
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--定义生成的SQL映射生成器的属性-->
+        <!-- targetProject:mapper映射文件生成的位置 -->
+        <!-- 是否让数据表名作为包的后缀  -->
+        <sqlMapGenerator targetPackage="com.test.restful.mapper"  targetProject="src/main/java">                            <!-- dao mapper-->
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!--定义Java客户端生成器的属性，构建Java接口和类-->
+        <!-- targetPackage:mapper接口生成的位置 -->
+        <!-- 是否让数据表名作为包的后缀  -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.test.restful.Dao"  targetProject="src/main/java">             <!-- dao -->
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+        <!-- 指定数据库表  %通配符-所有数据表-->
+        <table tableName="%"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+    </context>
+</generatorConfiguration>

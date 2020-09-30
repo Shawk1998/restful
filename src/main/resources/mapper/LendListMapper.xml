@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.restful.Dao.LendListMapper" >
+  <resultMap id="BaseResultMap" type="com.test.restful.domain.LendList" >
+    <id column="sernum" property="sernum" jdbcType="BIGINT" />
+    <result column="book_id" property="bookId" jdbcType="BIGINT" />
+    <result column="reader_id" property="readerId" jdbcType="INTEGER" />
+    <result column="lend_date" property="lendDate" jdbcType="DATE" />
+    <result column="back_date" property="backDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sernum, book_id, reader_id, lend_date, back_date
+  </sql>
+  <update id="bookReturnOne">
+        update lend_list set back_date = sysdate()
+        where book_id = #{bookId} and back_date is null
+    </update>
+  <update id="bookReturnTwo" parameterType="long">
+        UPDATE book_info SET state = 1 WHERE book_id = #{bookId}
+    </update>
+  <insert id="bookLendOne">
+        INSERT INTO lend_list VALUES (null ,#{bookId},#{readerId},sysdate(),null)
+    </insert>
+  <update id="bookLendTwo" parameterType="long">
+        UPDATE book_info SET state = 0 WHERE book_id = #{bookId}
+    </update>
+  <select id="lendList" resultType="com.test.restful.domain.LendList">
+        select * from lend_list
+    </select>
+  <select id="myLendList" resultType="com.test.restful.domain.LendList" parameterType="long">
+        select * from lend_list where reader_id = #{readerId}
+    </select>
+</mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.restful.Dao.ReaderInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.test.restful.domain.ReaderInfo" >
+    <id column="reader_id" property="readerId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="birth" property="birth" jdbcType="DATE" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="telcode" property="telcode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    reader_id, name, sex, birth, address, telcode
+  </sql>
+  <select id="getAllReaderInfo" resultType="com.test.restful.domain.ReaderInfo">
+        select * from reader_info
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from reader_info
+    where reader_id = #{readerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from reader_info
+    where reader_id = #{readerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.test.restful.domain.ReaderInfo" >
+    insert into reader_info (reader_id, name, sex, 
+      birth, address, telcode
+      )
+    values (#{readerId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{birth,jdbcType=DATE}, #{address,jdbcType=VARCHAR}, #{telcode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.restful.domain.ReaderInfo" >
+    insert into reader_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="readerId != null" >
+        reader_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birth != null" >
+        birth,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="telcode != null" >
+        telcode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="readerId != null" >
+        #{readerId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null" >
+        #{birth,jdbcType=DATE},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="telcode != null" >
+        #{telcode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.restful.domain.ReaderInfo" >
+    update reader_info
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birth != null" >
+        birth = #{birth,jdbcType=DATE},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="telcode != null" >
+        telcode = #{telcode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where reader_id = #{readerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.restful.domain.ReaderInfo" >
+    update reader_info
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birth = #{birth,jdbcType=DATE},
+      address = #{address,jdbcType=VARCHAR},
+      telcode = #{telcode,jdbcType=VARCHAR}
+    where reader_id = #{readerId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.restful.Dao.BookInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.test.restful.domain.BookInfo" >
+    <id column="book_id" property="bookId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="publish" property="publish" jdbcType="VARCHAR" />
+    <result column="ISBN" property="isbn" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="REAL" />
+    <result column="pubdate" property="pubdate" jdbcType="DATE" />
+    <result column="class_id" property="classId" jdbcType="INTEGER" />
+    <result column="pressmark" property="pressmark" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.test.restful.domain.BookInfo" extends="BaseResultMap" >
+    <result column="introduction" property="introduction" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    book_id, name, author, publish, ISBN, language, price, pubdate, class_id, pressmark, 
+    state
+  </sql>
+  <sql id="Blob_Column_List" >
+    introduction
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from book_info
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </select>
+  <select id="matchBook" resultType="int" parameterType="String">
+        select count(*) from book_info where name like #{search}
+        or author like #{search} or introduction like #{search}
+    </select>
+  <select id="queryBook" resultType="com.test.restful.domain.BookInfo" parameterType="String">
+        select * from book_info where name like #{search}
+        or author like #{search} or introduction like #{search}
+    </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from book_info
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.test.restful.domain.BookInfo" >
+    insert into book_info (book_id, name, author, 
+      publish, ISBN, language, 
+      price, pubdate, class_id, 
+      pressmark, state, introduction
+      )
+    values (#{bookId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{publish,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
+      #{price,jdbcType=REAL}, #{pubdate,jdbcType=DATE}, #{classId,jdbcType=INTEGER}, 
+      #{pressmark,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{introduction,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.restful.domain.BookInfo" >
+    insert into book_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="publish != null" >
+        publish,
+      </if>
+      <if test="isbn != null" >
+        ISBN,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="pubdate != null" >
+        pubdate,
+      </if>
+      <if test="classId != null" >
+        class_id,
+      </if>
+      <if test="pressmark != null" >
+        pressmark,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publish != null" >
+        #{publish,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null" >
+        #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="pubdate != null" >
+        #{pubdate,jdbcType=DATE},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="pressmark != null" >
+        #{pressmark,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.restful.domain.BookInfo" >
+    update book_info
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publish != null" >
+        publish = #{publish,jdbcType=VARCHAR},
+      </if>
+      <if test="isbn != null" >
+        ISBN = #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="pubdate != null" >
+        pubdate = #{pubdate,jdbcType=DATE},
+      </if>
+      <if test="classId != null" >
+        class_id = #{classId,jdbcType=INTEGER},
+      </if>
+      <if test="pressmark != null" >
+        pressmark = #{pressmark,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.test.restful.domain.BookInfo" >
+    update book_info
+    set name = #{name,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      publish = #{publish,jdbcType=VARCHAR},
+      ISBN = #{isbn,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      pubdate = #{pubdate,jdbcType=DATE},
+      class_id = #{classId,jdbcType=INTEGER},
+      pressmark = #{pressmark,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      introduction = #{introduction,jdbcType=LONGVARCHAR}
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.restful.domain.BookInfo" >
+    update book_info
+    set name = #{name,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      publish = #{publish,jdbcType=VARCHAR},
+      ISBN = #{isbn,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      price = #{price,jdbcType=REAL},
+      pubdate = #{pubdate,jdbcType=DATE},
+      class_id = #{classId,jdbcType=INTEGER},
+      pressmark = #{pressmark,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER}
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </update>
+  <select id="getAllBooks" resultType="com.test.restful.domain.BookInfo">
+        select * from book_info
+    </select>
+</mapper>
