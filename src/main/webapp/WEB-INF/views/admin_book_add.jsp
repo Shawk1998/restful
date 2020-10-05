@@ -2,9 +2,9 @@
 <html>
 <head>
     <title>图书信息添加</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="js/jquery-3.2.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <script src="/static/js/jquery-3.2.1.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
     <style>
         body {
             background-color: rgb(240, 242, 245);
@@ -69,6 +69,7 @@
 
 <div style="position: relative;top: 10%;width: 80%;margin-left: 10%">
     <form action="book_add_do" method="post" id="addbook">
+        <input type="hidden" name="_method" value="PUT">
         <div class="form-group">
             <label for="name">图书名</label>
             <input type="text" class="form-control" name="name" id="name" placeholder="请输入书名">

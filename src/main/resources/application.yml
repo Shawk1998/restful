@@ -22,6 +22,7 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
+    static-path-pattern: /static/**
   datasource:
     url: jdbc:mysql://localhost:3306/library?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&serverTimezone=GMT
     username: root

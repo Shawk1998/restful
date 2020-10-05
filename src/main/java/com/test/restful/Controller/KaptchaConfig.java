@@ -2,12 +2,9 @@ package com.test.restful.Controller;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 
@@ -48,16 +45,16 @@ public class KaptchaConfig {
     }
 
     //拦截器
-    @Bean
-    public FilterRegistrationBean authFilterRegistrationBean() {
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setName("authFilter");
-        AuthFilter authFilter = new AuthFilter();
-        registrationBean.setFilter(authFilter);
-        registrationBean.setOrder(1);
-        List<String> urlList = new ArrayList<String>();
-        urlList.add("/*");
-        registrationBean.setUrlPatterns(urlList);
-        return registrationBean;
-    }
+//    @Bean
+//    public FilterRegistrationBean authFilterRegistrationBean() {
+//        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+//        registrationBean.setName("authFilter");
+//        AuthFilter authFilter = new AuthFilter();
+//        registrationBean.setFilter(authFilter);
+//        registrationBean.setOrder(1);
+//        List<String> urlList = new ArrayList<String>();
+//        urlList.add("/*");
+//        registrationBean.setUrlPatterns(urlList);
+//        return registrationBean;
+//    }
 }

@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="//cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="//cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="//cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script  src="/js/js.cookie.js"></script>
-    <script  src="/js/aes.js"></script>
+    <script  src="/static/js/js.cookie.js"></script>
+    <script  src="/static/js/aes.js"></script>
     <style>
         #myCarousel {
             margin-left: 2%;
@@ -184,13 +184,13 @@
     </ol>
     <div class="carousel-inner">
         <div class="item active">
-            <img src="/image/1.jpg" alt="第一张">
+            <img src="/static/image/1.jpg" alt="第一张">
         </div>
         <div class="item">
-            <img src="/image/2.jpg" alt="第二张">
+            <img src="/static/image/2.jpg" alt="第二张">
         </div>
         <div class="item">
-            <img src="/image/3.jpg" alt="第三张">
+            <img src="/static/image/3.jpg" alt="第三张">
         </div>
 
     </div>

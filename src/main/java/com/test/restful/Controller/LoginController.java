@@ -7,9 +7,7 @@ import com.test.restful.domain.Admin;
 import com.test.restful.domain.ReaderCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,6 +33,8 @@ public class LoginController {
     private DefaultKaptcha captchaProducer = null;
     @Autowired
     private LoginService loginService;
+
+    private static LoginServlet usercard=new LoginServlet();
 
     public static String decode(String message, String key) {
         key = key + key + key + key;
@@ -74,7 +74,7 @@ public class LoginController {
         return null;
     }
 
-    @RequestMapping(value = "/verifyImage")
+    @GetMapping(value = "/verifyImage")
     public void getVerifyImage(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         HttpSession session = request.getSession();
@@ -102,7 +102,7 @@ public class LoginController {
         }
     }
 
-    @RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
+    @PostMapping(value = "/loginCheck")
     public @ResponseBody
     Object loginCheck(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -127,7 +127,7 @@ public class LoginController {
             res.put("msg", "账号或密码错误！");
         } else if (isAdmin) {
             request.getSession().setAttribute("user", id_a);
-           // usercard.mLogin(id_a, request.getSession());
+            usercard.mLogin(id_a, request.getSession());
             Admin admin = new Admin();
             admin.setAdminId(id);
             admin.setPassword(password);
@@ -136,7 +136,7 @@ public class LoginController {
             res.put("msg", "管理员登陆成功！");
         } else {
             request.getSession().setAttribute("user", id_a);
-          //  usercard.mLogin(id_a, request.getSession());
+            usercard.mLogin(id_a, request.getSession());
             ReaderCard readerCard = loginService.findReaderCardByUserId(id);
             request.getSession().setAttribute("userCard", readerCard);
             res.put("stateCode", "2");
