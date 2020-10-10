@@ -34,7 +34,8 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
-    private static LoginServlet usercard=new LoginServlet();
+    @Autowired
+    private LoginServlet usercard=new LoginServlet();
 
     public static String decode(String message, String key) {
         key = key + key + key + key;

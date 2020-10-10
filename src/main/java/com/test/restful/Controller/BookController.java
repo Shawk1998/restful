@@ -4,8 +4,7 @@ import com.test.restful.Service.BookService;
 import com.test.restful.domain.BookInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -16,6 +15,56 @@ import java.util.ArrayList;
 public class BookController {
     @Autowired
     private BookService bookService;
+
+
+    @PutMapping("/book/{id}")
+    public String bookEditDo(@PathVariable("id") long id, BookInfo book, RedirectAttributes redirectAttributes) {
+        book.setBookId(id);
+        boolean succ = bookService.editBook(book);
+        if (succ) {
+            redirectAttributes.addFlashAttribute("succ", "图书修改成功！");
+            return "redirect:/allbooks";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "图书修改失败！");
+            return "redirect:/allbooks";
+        }
+    }
+
+    @GetMapping("/book/{id}")
+    public ModelAndView bookDetail(@PathVariable("id") long id) {
+        BookInfo book = bookService.getBook(id);
+        ModelAndView modelAndView = new ModelAndView("admin_book_detail");
+        modelAndView.addObject("detail", book);
+        return modelAndView;
+    }
+
+    @DeleteMapping("/book/{id}")
+    public String deleteBook (@PathVariable("id") int id, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        //long bookId = Integer.parseInt(request.getParameter("bookId"));
+        int res = bookService.deleteBook(id);
+
+        //redisTemplate.delete("books");
+        if (res == 1) {
+            redirectAttributes.addFlashAttribute("succ", "图书删除成功！");
+            return "redirect:/allbooks";
+        } else {
+            redirectAttributes.addFlashAttribute("error", "图书删除失败！");
+            return "redirect:/allbooks";
+        }
+    }
+
+    @PostMapping("/book")
+    public String addBookDo(BookInfo bookInfo, RedirectAttributes redirectAttributes) {
+        boolean succ = bookService.addBook(bookInfo);
+        // ArrayList<BookInfo> books = bookService.getAllBooks();
+        if (succ) {
+            redirectAttributes.addFlashAttribute("succ", "图书添加成功！");
+            return "redirect:/allbooks";
+        } else {
+            redirectAttributes.addFlashAttribute("succ", "图书添加失败！");
+            return "redirect:/allbooks";
+        }
+    }
 
     @RequestMapping("/querybook")
     public ModelAndView queryBookDo(HttpServletRequest request, String searchWord) {
@@ -65,19 +114,6 @@ public class BookController {
 
     }
 
-    @RequestMapping("/deletebook")
-    public String deleteBook(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        long bookId = Integer.parseInt(request.getParameter("bookId"));
-        int res = bookService.deleteBook(bookId);
-        //redisTemplate.delete("books");
-        if (res == 1) {
-            redirectAttributes.addFlashAttribute("succ", "图书删除成功！");
-            return "redirect:/allbooks";
-        } else {
-            redirectAttributes.addFlashAttribute("error", "图书删除失败！");
-            return "redirect:/allbooks";
-        }
-    }
 
     @RequestMapping("/book_add")
     public ModelAndView addBook(HttpServletRequest request) {
@@ -86,46 +122,11 @@ public class BookController {
 
     }
 
-    @PutMapping("/book_add_do")
-    public String addBookDo(BookInfo bookInfo, RedirectAttributes redirectAttributes) {
-        boolean succ = bookService.addBook(bookInfo);
-       // ArrayList<BookInfo> books = bookService.getAllBooks();
-        if (succ) {
-            redirectAttributes.addFlashAttribute("succ", "图书添加成功！");
-            return "redirect:/allbooks";
-        } else {
-            redirectAttributes.addFlashAttribute("succ", "图书添加失败！");
-            return "redirect:/allbooks";
-        }
-    }
 
-    @RequestMapping("/updatebook")
-    public ModelAndView bookEdit(HttpServletRequest request) {
-        long bookId = Integer.parseInt(request.getParameter("bookId"));
-        BookInfo book = bookService.getBook(bookId);
+    @RequestMapping("/bookedit/{id}")
+    public ModelAndView bookEdit(@PathVariable("id") long id) {
+        BookInfo book = bookService.getBook(id);
         ModelAndView modelAndView = new ModelAndView("admin_book_edit");
-        modelAndView.addObject("detail", book);
-        return modelAndView;
-    }
-
-    @RequestMapping("/book_edit_do")
-    public String bookEditDo(HttpServletRequest request, BookInfo book, RedirectAttributes redirectAttributes) {
-        book.setBookId(Long.parseLong(request.getParameter("id")));
-        boolean succ = bookService.editBook(book);
-        if (succ) {
-            redirectAttributes.addFlashAttribute("succ", "图书修改成功！");
-            return "redirect:/allbooks";
-        } else {
-            redirectAttributes.addFlashAttribute("error", "图书修改失败！");
-            return "redirect:/allbooks";
-        }
-    }
-
-    @RequestMapping("/bookdetail")
-    public ModelAndView bookDetail(HttpServletRequest request) {
-        long bookId = Integer.parseInt(request.getParameter("bookId"));
-        BookInfo book = bookService.getBook(bookId);
-        ModelAndView modelAndView = new ModelAndView("admin_book_detail");
         modelAndView.addObject("detail", book);
         return modelAndView;
     }

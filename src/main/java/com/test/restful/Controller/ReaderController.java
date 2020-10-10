@@ -7,6 +7,7 @@ import com.test.restful.domain.ReaderCard;
 import com.test.restful.domain.ReaderInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -124,9 +125,10 @@ public class ReaderController {
             return "redirect:/reader_repasswd";
         }
     }
-    @RequestMapping("reader_add_do")
+    @PutMapping("reader_add_do")
     public String readerInfoAddDo(ReaderInfo readerInfo,RedirectAttributes redirectAttributes){
         boolean succ = readerInfoService.addReaderInfo(readerInfo);
+        System.out.println("succ");
         if (succ) {
             redirectAttributes.addFlashAttribute("succ", "添加读者信息成功！");
             return "redirect:/allreaders";

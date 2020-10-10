@@ -1,10 +1,13 @@
 package com.test.restful.Controller;
 
+import org.springframework.stereotype.Repository;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+@Repository
 public class LoginServlet extends HttpServlet {
     public static Map<String, HttpSession> user_Session = new HashMap<String, HttpSession>();
 

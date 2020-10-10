@@ -73,8 +73,8 @@
             <h3 class="panel-title">编辑《 ${detail.name}》</h3>
         </div>
         <div class="panel-body">
-            <form action="book_edit_do?id=${detail.bookId}" method="post" id="addbook">
-
+            <form action="/book/${detail.bookId}" method="post" id="addbook">
+                <input type="hidden" name="_method" value="PUT" />
                 <div class="input-group">
                     <span class="input-group-addon">书名</span>
                     <input type="text" class="form-control" name="name" id="name" value="${detail.name}">

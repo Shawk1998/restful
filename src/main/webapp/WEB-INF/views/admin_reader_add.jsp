@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" isErrorPage="true"%>
 <html>
 <head>
     <title>添加读者</title>
@@ -74,6 +75,7 @@
         </div>
         <div class="panel-body">
             <form action="reader_add_do" method="post" id="readeredit">
+                <input type="hidden" name="_method" value="PUT">
                 <div class="input-group">
                     <span class="input-group-addon">读者证号</span>
                     <input type="text" class="form-control" name="readerId" id="readerId">

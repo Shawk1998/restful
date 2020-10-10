@@ -6,6 +6,7 @@ import com.test.restful.domain.BookInfo;
 import com.test.restful.domain.ReaderCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -20,10 +21,9 @@ public class LendController {
     @Autowired
     private BookService bookService;
 
-    @RequestMapping("/lendbook")
-    public ModelAndView bookLend(HttpServletRequest request) {
-        long bookId = Integer.parseInt(request.getParameter("bookId"));
-        BookInfo book = bookService.getBook(bookId);
+    @RequestMapping("/lendbook/{id}")
+    public ModelAndView bookLend(@PathVariable long id,HttpServletRequest request) {
+        BookInfo book = bookService.getBook(id);
         ModelAndView modelAndView = new ModelAndView("admin_book_lend");
         modelAndView.addObject("book", book);
         return modelAndView;
@@ -44,10 +44,9 @@ public class LendController {
 
     }
 
-    @RequestMapping("/returnbook")
-    public String bookReturn(HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        long bookId = Integer.parseInt(request.getParameter("bookId"));
-        boolean retSucc = lendService.bookReturn(bookId);
+    @RequestMapping("/returnbook/{id}")
+    public String bookReturn(@PathVariable("id") long id, RedirectAttributes redirectAttributes) {
+        boolean retSucc = lendService.bookReturn(id);
         if (retSucc) {
             redirectAttributes.addFlashAttribute("succ", "图书归还成功！");
             return "redirect:/allbooks";

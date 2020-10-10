@@ -17,17 +17,33 @@ server:
   servlet:
     session:
       timeout: 30m
+
 spring:
   mvc:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
     static-path-pattern: /static/**
+    hiddenmethod:
+      filter:
+        enabled: true
   datasource:
     url: jdbc:mysql://localhost:3306/library?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&serverTimezone=GMT
     username: root
     password: 666
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    database: 0
+    timeout: 300
+    jedis:
+      pool:
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
 
 mybatis:
   type-aliases-package: com.test.restful.domain

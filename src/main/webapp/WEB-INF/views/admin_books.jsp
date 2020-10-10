@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>全部图书信息</title>
@@ -137,36 +138,40 @@
             <tbody>
             <c:forEach items="${books}" var="book">
                 <tr>
-                    <td><c:out value="${book.name}"></c:out></td>
-                    <td><c:out value="${book.author}"></c:out></td>
-                    <td><c:out value="${book.publish}"></c:out></td>
-                    <td><c:out value="${book.isbn}"></c:out></td>
-                    <td><c:out value="${book.price}"></c:out></td>
+                    <td>${book.name}</td>
+                    <td>${book.author}</td>
+                    <td>${book.publish}</td>
+                    <td>${book.isbn}</td>
+                    <td>${book.price}</td>
                     <c:if test="${book.state==1}">
-                        <td><a href="lendbook?bookId=<c:out value="${book.bookId}"></c:out>">
+                        <td><a href="lendbook/${book.bookId}">
                             <button type="button" class="btn btn-primary btn-xs">借阅</button>
                         </a></td>
                     </c:if>
                     <c:if test="${book.state==0}">
-                        <td><a href="returnbook?bookId=<c:out value="${book.bookId}"></c:out>">
+                        <td><a href="returnbook/${book.bookId}">
                             <button type="button" class="btn btn-primary btn-xs">归还</button>
                         </a></td>
                     </c:if>
-                    <td><a href="bookdetail?bookId=<c:out value="${book.bookId}"></c:out>">
+                    <td><a href="book/${book.bookId}">
                         <button type="button" class="btn btn-success btn-xs">详情</button>
                     </a></td>
-                    <td><a href="updatebook?bookId=<c:out value="${book.bookId}"></c:out>">
-                        <button type="button" class="btn btn-info btn-xs">编辑</button>
-                    </a></td>
-                    <td><a href="deletebook?bookId=<c:out value="${book.bookId}"></c:out>">
-                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                    </a></td>
+                    <td>
+                        <form action="/bookedit/${book.bookId}" method="get">
+                            <button type="submit" class="btn btn-info btn-xs">编辑</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/book/${book.bookId}" method="post">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button type="submit" class="btn btn-danger btn-xs" >删除</button>
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
     </div>
 </div>
-
 </body>
 </html>
